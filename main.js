@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     //! Se não tiver nada no localStorage, o array será definido a seguir:
     if(!itens) {
-        var vetor = ["panda", "pombo", "tigre", "zebra", "porco", "corvo", "polvo", "coala"];
+        var vetor = ["pandas", "cachorro", "tigresa", "coala", "computador"];
     } else {
         var vetor = itens;
     }
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function criarQuadrados() {
         const gameBoard = document.getElementById("board");
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < palavraAtual.length; i++) {
             let square = document.createElement("div");
             square.classList.add("square");
             //square.classList.add("animate__animated");
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function PalavraCorreta(letra) {
 
-        countCerto = countCerto + 1;
+        //countCerto = countCerto + 1;
 
         TecladoVerde(letra);
 
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         titulo.textContent = "Certo";
 
     
-        if(countCerto === 5) {
+        if(countCerto === palavraAtual.length) {
 
             const titulo = document.querySelector(".title");
             titulo.textContent = "Correto!";
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 titulo.textContent = "Por pouco!";
             }
 
-            for(let i=0; i<5; i++) {
+            for(let i=0; i<palavraAtual.length; i++) {
                 
                 setTimeout(() => {
 
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
         titulo.textContent = "Não foi dessa vez!";
         //titulo.classList.add("cor-amarela-titulo");
 
-        for(let i=0; i<5; i++) {
+        for(let i=0; i<palavraAtual.length; i++) {
                 
             setTimeout(() => {
                     
@@ -216,10 +216,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function TecladoVerde(letra) {
-        console.log(letra);
         
         const tecladoLetra = document.querySelector(`[data-key=${letra}]`);
-        tecladoLetra.classList.add("letra-certa");
+        
+        if(tecladoLetra) {
+            tecladoLetra.classList.add("letra-certa");
+        }
         
     }
 
@@ -247,19 +249,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             var inputValor = inputNovaPalavra.value;
 
-            if(inputValor.length === 5) {
+            if(inputValor.length <= 10 && inputValor.length > 1) {
+
                 vetor.push(inputNovaPalavra.value);
                 window.localStorage.setItem("storedArray", JSON.stringify(vetor));
-                inputNovaPalavra.value = "";
-                inputNovaPalavra.placeholder = "Palavra adicionada!";
-            } else {
-                inputNovaPalavra.value = "";
-                inputNovaPalavra.placeholder = "Somente 5 letras";
-            }
 
-            
+            } 
 
             inputNovaPalavra.value = "";
+            MostrarAlerta(inputValor.length);
+            
 
         })
 
@@ -287,6 +286,15 @@ document.addEventListener("DOMContentLoaded", () => {
             
         //     modal.style.display = "none";
         // });
+    }
+
+    function MostrarAlerta(tamPalavra) {
+
+        if(tamPalavra <= 10 && tamPalavra > 1) {
+            alert("Palavra adicionada!");
+        } else {
+            alert("Palavra inválida!");
+        }
     }
 
     function initHelpModal() {
@@ -323,9 +331,9 @@ document.addEventListener("DOMContentLoaded", () => {
             keys[i].addEventListener("click", ({ target }) => {
                 const key = target.getAttribute("data-key");
 
-                if(key !== null) {
+                if(key) {
                     if(countErrado <= 5) {
-                        if(countCerto <= 4) {
+                        if(countCerto <= palavraAtual.length - 1) {
     
                             var wrong = 0;
         
@@ -335,12 +343,18 @@ document.addEventListener("DOMContentLoaded", () => {
                                     quadrado = document.getElementById(i+1);
                                     quadrado.textContent = key;
                                     
+                                    countCerto = countCerto + 1;
+
                                     
                                     PalavraCorreta(key);
-    
+                                    
+
                                     //* Impede o usuário digitar a mesma letra novamente
                                     const chave = document.querySelector(`[data-key=${key}]`);
-                                    chave.removeAttribute("data-key");        
+                                    if(chave) {
+                                        chave.removeAttribute("data-key");
+                                    }
+                                            
     
                                 } else {
                                     wrong++;
@@ -348,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 
                             }
 
-                            if(wrong === 5) {
+                            if(wrong === palavraAtual.length) {
                                 if(key === "enter" || key === "del") {
                                     return;
                                 } else {

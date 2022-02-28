@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo da Forca</title>
-    <link rel="icon" href="faviconW.png">
+    <link rel="icon" href="rope.png">
     <script src="main.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
     <link rel="stylesheet" href="style.css">
@@ -18,7 +18,7 @@
             <header>
                 <i class="far fa-question-circle" id="help"></i>
                 <h1 class="title animate__animated animate__tada">FORCA</h1>
-                <i class="fas fa-chart-bar" id="stats"></i>
+                <i class="far fa-lightbulb" id="stats"></i>
             </header>
 
             <div id="board-container">
@@ -75,33 +75,35 @@
             </div>
         </div>
 
-        <!-- <div id="help-modal" class="modal">
+        <div id="help-modal" class="modal">
         
             <div class="modal-content">
                 <span class="close" id="close-help">&times;</span>
 
-                <p>Guess the WORDLE in 6 tries.</p>
+                <p>Tente advinhar a palavra com 6 tentativas.</p>
 
-                <p>Each guess must be a valid 5 letter word. Hit the enter button to submit.</p>
+                <p>Cada palavra tem 5 letras.</p>
 
-                <p>After each guess, the color of the tiles will change to show how close your guess was to the word.</p>
+                <p>Depois de cada tentativa, a cor da letra no teclado irá mudar para vermelho se a palavra não conter a letra, ou verde se a palavra conter a letra.</p>
 
-                <img src="examples.png" id="examples">
+                <p>Você pode adicionar novas palavras</p>
+
+                <p>Dica: As palavras pré-definidas são ANIMAIS!</p>
 
                 <hr>
 
-                <p>A new WORDLE will be available each day!</p>
+                
             </div>
-        </div> -->
+        </div>
 
         <div id="stats-modal" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close" id="close-stats">&times;</span>
 
-                <h2>DICA: ANIMAIS</h2>
-
-                
+                <h2>INSERIR NOVAS PALAVRAS</h2>
+                <input type="text" name="novapalavra" id="novapalavra" placeholder="Digite aqui">
+                <button id="btn-novapalavra" >OK</button>
 
                 <!-- <button id="btn-reset">RESET</button> -->
             </div>

@@ -1,36 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // word = "crime";
-    // console.log(word[0], word[1], word[2], word[3], word[4]);
 
     var countCerto = 0;
     var countErrado = 0;
-    var wrongLetters = [];
     var atualPalavraIndex = 0;
-    
-
     let palavraAtual;
-    var palavras = ["aguia", "lebre", "cisne", "lesma", "panda", "pombo", "tigre", "veado", "zebra", "porco", "cupim", "corvo", "polvo", "coala", "ganso", "lhama"];
-
+    
+    var itens = JSON.parse(window.localStorage.getItem("storedArray"));
+    
+    //! Se não tiver nada no localStorage, o array será definido a seguir:
+    if(!itens) {
+        var vetor = ["panda", "pombo", "tigre", "zebra", "porco", "corvo", "polvo", "coala"];
+    } else {
+        var vetor = itens;
+    }
+    
+    console.log(vetor);
 
     initLocalStorage();
 
     
-    palavraAtual = palavras[atualPalavraIndex];
+    palavraAtual = vetor[atualPalavraIndex];
 
 
     criarQuadrados();
     addKeyboardClicks();
     initStatsModal();
-    
+    initHelpModal();    
 
     function initLocalStorage() {
         const storedAtualPalavra = window.localStorage.getItem("atualPalavraIndex");
-        if (!storedAtualPalavra || Number(storedAtualPalavra) === 16) {
+        if (!storedAtualPalavra || Number(storedAtualPalavra) === vetor.length) {
             window.localStorage.setItem("atualPalavraIndex", atualPalavraIndex);
         } else {
             atualPalavraIndex = Number(storedAtualPalavra);
-            palavraAtual = palavras[atualPalavraIndex];
+            palavraAtual = vetor[atualPalavraIndex];
         }
     }
 
@@ -59,17 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
         TecladoVerde(letra);
 
         const titulo = document.querySelector(".title");
-        titulo.classList.remove("animate__animated", "animate__shakeX", "animate__tada");
+        
         titulo.textContent = "Certo";
 
-        //* Para não computar a mesma letra várias vezes
-        // rightLetters.push(letra);
-
-        // for(let i=0; i<rightLetters.length; i++) {
-        //     if(letra === rightLetters[i]) {
-        //         return;
-        //     }
-        // }
     
         if(countCerto === 5) {
 
@@ -94,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if(countErrado === 4) {
-                titulo.textContent = "Só faltou as pernas!";
+                titulo.textContent = "Muito bem!";
             }
 
             if(countErrado === 5) {
@@ -135,19 +131,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function LetraErrada(letra) {
 
-        wrongLetters.push(letra);
-        console.log(wrongLetters);
+        
         
         TecladoVermelho(letra);
 
         
 
         const titulo = document.querySelector(".title");
-        titulo.classList.remove("animate__animated", "animate__shakeX", "animate__tada");
+        
         
         
         titulo.textContent = "Errado";
-        titulo.classList.add("animate__animated", "animate__shakeX");
 
         countErrado = countErrado + 1;
 
@@ -170,12 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
             GameOver();
         }
 
-        
-        
-        
-        // wrongLetters.forEach((letra) => {
-        //     titulo.textContent += " " + letra;
-        // });
         
     }
 
@@ -219,11 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    function RemoverAnimacoes() {
-        const titulo = document.querySelector(".title");
-        titulo.classList.remove("animate__animated", "animate__shakeX");
-    }
-
     function TecladoVermelho(letra) {
 
         
@@ -253,7 +236,34 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", function () {
             
             modal.style.display = "block";
+            
         });
+
+        //* ADICIONAR NOVAS PALAVRAS:
+        const btnNovaPalavra = document.getElementById("btn-novapalavra");
+        const inputNovaPalavra = document.getElementById("novapalavra");
+
+        btnNovaPalavra.addEventListener("click", function() {
+
+            var inputValor = inputNovaPalavra.value;
+
+            if(inputValor.length === 5) {
+                vetor.push(inputNovaPalavra.value);
+                window.localStorage.setItem("storedArray", JSON.stringify(vetor));
+                inputNovaPalavra.value = "";
+                inputNovaPalavra.placeholder = "Palavra adicionada!";
+            } else {
+                inputNovaPalavra.value = "";
+                inputNovaPalavra.placeholder = "Somente 5 letras";
+            }
+
+            
+
+            inputNovaPalavra.value = "";
+
+        })
+
+
 
         //When the user clicks on <span> (x), close the modal
         span.addEventListener("click", function () {
@@ -277,6 +287,33 @@ document.addEventListener("DOMContentLoaded", () => {
             
         //     modal.style.display = "none";
         // });
+    }
+
+    function initHelpModal() {
+        const modal = document.getElementById("help-modal");
+
+        //Get the button that opens the modal
+        const btn = document.getElementById("help");
+
+        //Get the <span> element that closes the modal
+        const span = document.getElementById("close-help");
+
+        //When the user clicks on the button, open the modal
+        btn.addEventListener("click", function () {
+            modal.style.display = "block";
+        });
+
+        //When the user clicks on <span> (x), close the modal
+        span.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        //When the user clicks anywhere outside of the modal, close it
+        window.addEventListener("click", function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
     }
 
 

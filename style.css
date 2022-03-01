@@ -88,7 +88,7 @@ header {
 }
 
 .square {
-    border: 2px solid #d3d6da;
+    border: 2px solid #a2a5a8;
     min-width: 50px;
     min-height: 55px;
     margin: 0px 2px;
@@ -125,10 +125,12 @@ header {
     color: white;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 500px) {
     .square {
-        min-width: 15vw;
-        min-height: 15vw;
+        /* min-width: 15vw;
+        min-height: 15vw; */
+        min-width: 38px;
+        min-height: 55px;
     }
 }
 
@@ -151,8 +153,6 @@ header {
     padding: 0;
     height: 50px;
     cursor: pointer;
-    /* background-color: rgb(86, 87, 87);
-    color: rgb(215, 218, 220); */
     background-color: #d3d6da;
     color: black;
     flex-grow: 1;
@@ -336,24 +336,28 @@ header {
 }
 
 #novapalavra {
-    border: 4px solid black;
+    border: none;
     padding: 8px;
     border-radius: 6px;
     font-family: 'Overpass', sans-serif;
     font-size: 18px;
     font-weight: 700;
+    margin-bottom: 15px;
 }
 
 #btn-novapalavra {
-    padding: 11px;
+    padding: 10px;
     border: none;
     cursor: pointer;
     font-family: 'Overpass', sans-serif;
     color: white;
     font-weight: 700;
     background-color: #6aaa64;
+    margin-left: 5px;
+    margin-bottom: 5px;
 }
 
 #btn-novapalavra:hover {
     border: 4px solid black;
+    border-radius: 5px;
 }

@@ -251,9 +251,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if(inputValor.length <= 10 && inputValor.length > 1) {
 
-                vetor.push(inputNovaPalavra.value);
-                window.localStorage.setItem("storedArray", JSON.stringify(vetor));
+                var minuscula = inputValor.toLowerCase();
 
+                vetor.push(minuscula);
+                window.localStorage.setItem("storedArray", JSON.stringify(vetor));
+                
             } 
 
             inputNovaPalavra.value = "";

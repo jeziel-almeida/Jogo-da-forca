@@ -5,12 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
     var countErrado = 0;
     var atualPalavraIndex = 0;
     let palavraAtual;
+    var palavrasTeclado = [];
+    
+    
     
     var itens = JSON.parse(window.localStorage.getItem("storedArray"));
     
     //! Se não tiver nada no localStorage, o array será definido a seguir:
     if(!itens) {
-        var vetor = ["pandas", "cachorro", "tigresa", "coala", "computador"];
+        var vetor = ["panda", "cachorro", "leopardo", "coala", "baleia"];
     } else {
         var vetor = itens;
     }
@@ -211,7 +214,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         
         const tecladoLetra = document.querySelector(`[data-key=${letra}]`);
-        tecladoLetra.classList.add("letra-errada");
+        if(tecladoLetra) {
+            tecladoLetra.classList.add("letra-errada");
+        }
         
     }
 
@@ -373,7 +378,10 @@ document.addEventListener("DOMContentLoaded", () => {
     
                                     //* Impede o usuário digitar a mesma letra novamente
                                     const chave = document.querySelector(`[data-key=${key}]`);
-                                    chave.removeAttribute("data-key");
+                                    if(chave) {
+                                        chave.removeAttribute("data-key");
+                                    }
+                                    
                                 }
                             
                             }
@@ -390,7 +398,68 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    //* Verifica a entrado do teclado
+    document.addEventListener("keyup", (e) => {
+        if("KeyA" <= e.code && e.code <= "KeyZ") {
+            const keyPressed = e.code[3].toLowerCase();
+            
 
+            if(countErrado <= 5) {
+                if(countCerto <= palavraAtual.length - 1) {
+
+                    var wrong = 0;
+
+                    for(let i=0; i<palavraAtual.length; i++) {
+                        
+                        if(keyPressed === palavraAtual[i]) {
+                            quadrado = document.getElementById(i+1);
+                            quadrado.textContent = keyPressed;
+                            
+                            countCerto = countCerto + 1;
+
+                            
+                            PalavraCorreta(keyPressed);
+                            
+
+                            //* Impede o usuário digitar a mesma letra novamente
+                            const chave = document.querySelector(`[data-key=${keyPressed}]`);
+                            if(chave) {
+                                chave.removeAttribute("data-key");
+                            }
+
+                        } else {
+                            wrong++;
+                        }
+                        
+                    }
+
+                    if(wrong === palavraAtual.length) {
+                        
+                        LetraErrada(keyPressed);
+
+                        //* Impede o usuário digitar a mesma letra novamente
+                        const chave = document.querySelector(`[data-key=${keyPressed}]`);
+                        if(chave) {
+                            chave.removeAttribute("data-key");
+                        }
+                        
+                        
+                        
+                    
+                    }
+                }
+            }
+
+
+        } else if(e.code == "Backspace") {  
+            return;
+        } else if(e.code == "Enter") {
+            if(countErrado === 6 || countCerto === palavraAtual.length) {
+                location.reload();
+            }
+              
+        }
+    });
 
 
 

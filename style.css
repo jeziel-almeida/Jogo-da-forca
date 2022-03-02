@@ -3,7 +3,6 @@
 
 html, body {
     height: 100%;
-    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
     font-family: 'Overpass', sans-serif;
     margin: 0;
     padding: 0;
@@ -11,7 +10,6 @@ html, body {
 
 #container {
     display: flex;
-    /* background-color: rgb(18, 18, 19); */
     background-color: white;
     height: 100%;
     width: 100%;
@@ -31,7 +29,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #9c9d9e;
+    border-bottom: 1px solid rgb(71, 71, 153);
 }
 
 #help, #stats {
@@ -46,9 +44,7 @@ header {
     font-weight: 700;
     margin: 0.3rem 0 0.1rem 0;
     text-align: center;
-    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
     font-family: 'Overpass', sans-serif;
-    
 }
 
 @media only screen and (max-width: 480px) {
@@ -64,13 +60,6 @@ header {
     flex-grow: 1;
     flex-direction: column;
 }
-
-/* #final-score {
-    color: white;
-    background-color: rgb(94, 144, 185);
-    padding: 8px;
-    border-radius: 8px; 
-}*/
 
 #board {
     
@@ -107,23 +96,7 @@ header {
     font-size: 2rem;
 }
 
-.square.incorrect-letter {
-    background-color: #787c7e;
-    border-color: #787c7e;
-    color: white;
-}
 
-.square.correct-letter {
-    background-color: #c9b458;
-    border-color: #c9b458;
-    color: white;
-}
-
-.square.correct-letter-in-place {
-    background-color: #6aaa64;
-    border-color: #6aaa64;
-    color: white;
-}
 
 @media only screen and (max-width: 500px) {
     .square {
@@ -174,21 +147,6 @@ header {
     
 }
 
-.keyboard-row button.incorrect-letter {
-    background-color: #787c7e;
-    color: white;
-}
-
-.keyboard-row button.correct-letter {
-    background-color: #c9b458;
-    color: white;
-}
-
-.keyboard-row button.correct-letter-in-place {
-    background-color: #6aaa64;
-    color: white;
-}
-
 .spacer-half {
     flex-grow: 0.5;
 }
@@ -218,70 +176,27 @@ header {
     border: 1px solid rgb(58, 58, 60);
 }
 
-/* The Close Button */
+/* Os botões de fechar os modais */
 .close {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 35px;
     font-weight: bold;
+    
 }
 
 .close:hover, .close:focus {
-    color: black;
+    color: #24bb75;
     text-decoration: none;
     cursor: pointer;
-}
 
-#examples {
-    width: 80%;
 }
 
 .hidden {
     display: none;
 }
 
-#btn-reset {
-    padding: 10px;
-    cursor: pointer;
-    color: black;
-    font-weight: bold;
-    font-size: 15px;
-    border-radius: 15px;
-}
-
-#btn-reset:hover {
-    background-color: rgb(226, 96, 96);
-    color: white;
-}
-
-.play-again {
-    border: 1px solid rgb(83, 141, 78);
-    border-radius: 5px;
-    background-color: rgb(56, 125, 172);
-    color: white;
-    padding: 5px;
-    cursor: pointer;
-    font-size: 20px;
-}
-
-.play-again:hover {
-
-    background-color: #6aaa64;
-    color: white;
-    padding-right: 15px;
-    padding-left: 15px;
-    font-size: 21px
-}
-
-.play-again-enter {
-    background-color: #6aaa64;
-    color: white;
-    padding-right: 15px;
-    padding-left: 15px;
-    font-size: 21px
-}
-
-/** ESTILOS DO JOGO DA FORCA   */
+/** NOVOS ESTILOS   */
 
 .correto {
     background-color: #6aaa64;
@@ -325,14 +240,15 @@ header {
     font-family: 'Overpass', sans-serif;
     font-weight: 700;
     color: white;
-    background-color: darkcyan;
+    background-color: rgb(71, 71, 153);
     border: none;
     font-size: 18px;
-    border-radius: 10px;
+    border-radius: 7px;
+    transition: all 0.5s ease;
 }
 
 #btn-jogar-denovo:hover {
-    border: 4px solid rgb(3, 63, 63);
+    background-color: #24bb75;
 }
 
 #novapalavra {
@@ -346,18 +262,20 @@ header {
 }
 
 #btn-novapalavra {
-    padding: 10px;
+    padding: 8px 20px;
     border: none;
     cursor: pointer;
     font-family: 'Overpass', sans-serif;
-    color: white;
+    background-color: white;
     font-weight: 700;
-    background-color: #6aaa64;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    color: #24bb75;
+    margin: 5px;
+    font-size: 17px;
+    border-radius: 6px;
+    transition: all 0.5s ease;
 }
 
 #btn-novapalavra:hover {
-    border: 4px solid black;
-    border-radius: 5px;
+    color: white;
+    background-color: #24bb75;
 }

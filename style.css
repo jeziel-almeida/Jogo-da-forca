@@ -108,7 +108,7 @@ header {
 }
 
 #keyboard-container {
-    height: 185px; /* 200px com height do botão de 58px */
+    height: 175px; /* 200px com height do botão de 58px */
 }
 
 .keyboard-row {
@@ -279,3 +279,59 @@ header {
     color: white;
     background-color: #24bb75;
 }
+
+#btn-removerpalavra {
+    padding: 8px 20px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Overpass', sans-serif;
+    background-color: white;
+    font-weight: 700;
+    color: indianred;
+    margin: 0px;
+    font-size: 17px;
+    border-radius: 6px;
+    transition: all 0.5s ease;
+}
+
+#btn-removerpalavra:hover {
+    color: white;
+    background-color: indianred;
+}
+
+.progresso {
+    margin: 0px;
+    padding: 0px;
+    width: 160px;
+    height: 16px;
+}
+
+progress {
+    display: block;
+    -webkit-appearance: none;
+    padding: 3px
+}
+
+progress::-webkit-progress-bar {
+    background: #efefef;
+    border-radius: 50px;
+    border: 1px solid #8a8888;
+}
+
+progress::-webkit-progress-value {
+    background: #4223b4;
+    border-radius: 50px;
+}
+
+#paragrafo {
+    font-size: 20px;
+    margin: 10px 0px 0px 0px;
+    color: white;
+}
+
+#paragrafo-menor {
+    font-size: 15px;
+    margin: 0px 0px 15px 0px;
+    color: rgb(190, 190, 190);
+}
+

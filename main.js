@@ -6,8 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var atualPalavraIndex = 0;
     let palavraAtual;
     var palavrasTeclado = [];
-    
-    
+
     
     var itens = JSON.parse(window.localStorage.getItem("storedArray"));
     
@@ -25,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     palavraAtual = vetor[atualPalavraIndex];
 
+    var progresso = document.getElementById("progresso");
+    definirProgresso(progresso);
 
     criarQuadrados();
     addKeyboardClicks();
@@ -44,6 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function updatePalavraIndex() {
         
         window.localStorage.setItem("atualPalavraIndex", atualPalavraIndex + 1);
+    }
+
+    function definirProgresso(progresso) {
+        //var index = atualPalavraIndex + 1;
+        var max = vetor.length;
+        var index = window.localStorage.getItem("atualPalavraIndex");
+        progresso.innerHTML = "<progress value='"+index+"' max='"+max+"'></progress>"
     }
 
 
@@ -129,6 +137,8 @@ document.addEventListener("DOMContentLoaded", () => {
             botao.addEventListener("click", function() {
                 location.reload();
             });
+
+            definirProgresso(progresso);
         }
     }
 
@@ -207,6 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
             location.reload();
         });
 
+        definirProgresso(progresso);
 
     }
 
@@ -259,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 var minuscula = inputValor.toLowerCase();
 
                 vetor.push(minuscula);
-                window.localStorage.setItem("storedArray", JSON.stringify(vetor));
+                window.localStorage.setItem("storedArray", JSON.stringify(vetor)); 
                 
             } 
 
@@ -267,7 +278,27 @@ document.addEventListener("DOMContentLoaded", () => {
             MostrarAlerta(inputValor.length);
             
 
-        })
+        });
+
+        //Botão para remover as palavras adicionadas
+        const btnRemover = document.getElementById("btn-removerpalavra");
+
+        btnRemover.addEventListener("click", function () {
+            
+            if(vetor.length === 5) {
+                alert("Ainda não foram adicionadas novas palavras!");
+            }
+
+            if(vetor.length > 5) {
+                
+                var resultado = confirm("Confirma a remoção?");
+                if(resultado === true) {
+                    window.localStorage.removeItem("storedArray");
+                    vetor = ["panda", "cachorro", "leopardo", "coala", "baleia"];
+                    alert("As palavras foram removidas!")
+                }   
+            }
+        });
 
 
 

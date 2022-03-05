@@ -73,7 +73,15 @@
                     <button class="keyboard-button" data-key="del" class="wide-button"></button>
                 </div>
             </div>
+
+            
         </div>
+        
+        <div class="progresso" id="progresso">
+            <progress value="0" max="100"></progress>
+        </div>
+        
+        
 
         <div id="help-modal" class="modal">
         
@@ -88,9 +96,11 @@
 
                 <p>Você pode adicionar novas palavras no botão <strong>+</strong></p>
 
+                <hr>
+
                 <p>Dica: As palavras pré-definidas são ANIMAIS!</p>
 
-                <hr>
+                
 
                 
             </div>
@@ -103,14 +113,17 @@
 
                 <h2>INSERIR NOVAS PALAVRAS</h2>
 
-                <p>Adicione novas palavras ao banco de palavras</p>
+                <p id="paragrafo">Adicione novas palavras ao banco de palavras</p>
+                <p id="paragrafo-menor">Máx: 10 letras</p>
 
                 <input type="text" name="novapalavra" id="novapalavra" placeholder="Digite aqui">
                 <button id="btn-novapalavra" >OK</button>
 
-                <p>Máx: 10 letras.</p>
+                <hr>
 
-                <!-- <button id="btn-reset">RESET</button> -->
+                <p id="paragrafo">Remover palavras adicionadas</p>
+                <p id="paragrafo-menor">As palavras adicionadas serão removidas, ficando somente as pré-definidas.</p>
+                <button id="btn-removerpalavra">Remover</button>
             </div>
         </div>
     </div>

@@ -1,38 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-
     var countCerto = 0;
     var countErrado = 0;
     var atualPalavraIndex = 0;
     let palavraAtual;
-    var palavrasTeclado = [];
-
     
     var itens = JSON.parse(window.localStorage.getItem("storedArray"));
     
     //! Se não tiver nada no localStorage, o array será definido a seguir:
     if(!itens) {
-        var vetor = ["panda", "cachorro", "leopardo", "coala", "baleia"];
+        var vetor = ["panda", "cachorro", "leopardo", "coala", "baleia", "corvo", "gato", "tigre", "coelho", "ovelha"];
     } else {
         var vetor = itens;
     }
-    
-    console.log(vetor);
 
-    initLocalStorage();
+    iniciarLocalStorage();
 
-    
     palavraAtual = vetor[atualPalavraIndex];
 
     var progresso = document.getElementById("progresso");
     definirProgresso(progresso);
 
     criarQuadrados();
-    addKeyboardClicks();
-    initStatsModal();
-    initHelpModal();    
+    adicionarKeyboardClicks();
+    iniciarPalavrasModal();
+    iniciarHelpModal();    
 
-    function initLocalStorage() {
+    function iniciarLocalStorage() {
         const storedAtualPalavra = window.localStorage.getItem("atualPalavraIndex");
         if (!storedAtualPalavra || Number(storedAtualPalavra) === vetor.length) {
             window.localStorage.setItem("atualPalavraIndex", atualPalavraIndex);
@@ -42,18 +36,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function updatePalavraIndex() {
+    function atualizarPalavraIndex() {
         
         window.localStorage.setItem("atualPalavraIndex", atualPalavraIndex + 1);
     }
 
     function definirProgresso(progresso) {
-        //var index = atualPalavraIndex + 1;
         var max = vetor.length;
         var index = window.localStorage.getItem("atualPalavraIndex");
         progresso.innerHTML = "<progress value='"+index+"' max='"+max+"'></progress>"
     }
-
 
     function criarQuadrados() {
         const gameBoard = document.getElementById("board");
@@ -77,7 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         titulo.textContent = "Certo";
 
-    
         if(countCerto === palavraAtual.length) {
 
             const titulo = document.querySelector(".title");
@@ -118,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-                }, i * 200);
+                }, i * 150);
             }
 
             //* O botão irá aparecer abaixo do conteúdo todo
@@ -131,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
             var btn = "<div id='jogar-denovo'><button id='btn-jogar-denovo'>Jogar de novo</button></div>"
             resultado.innerHTML = btn + inhtml;
 
-            updatePalavraIndex();
+            atualizarPalavraIndex();
 
             const botao = document.getElementById("btn-jogar-denovo");
             botao.addEventListener("click", function() {
@@ -143,22 +134,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function LetraErrada(letra) {
-
-        
-        
+  
         TecladoVermelho(letra);
 
-        
-
         const titulo = document.querySelector(".title");
-        
-        
         
         titulo.textContent = "Errado";
 
         countErrado = countErrado + 1;
-
-        
 
         var foto = document.getElementById("forca-imagem");
 
@@ -184,7 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const titulo = document.querySelector(".title");
         titulo.textContent = "Não foi dessa vez!";
-        //titulo.classList.add("cor-amarela-titulo");
 
         for(let i=0; i<palavraAtual.length; i++) {
                 
@@ -197,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 letra.classList.add("animate__animated", "animate__flipInX");
                 letra.classList.add("sem-tentativas");
 
-            }, i * 200);
+            }, i * 150);
         }
 
         //* O botão irá aparecer abaixo do conteúdo todo
@@ -210,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         var btn = "<div id='jogar-denovo'><button id='btn-jogar-denovo'>Jogar de novo</button></div>"
         resultado.innerHTML = btn + inhtml;
 
-        updatePalavraIndex();
+        atualizarPalavraIndex();
 
         const botao = document.getElementById("btn-jogar-denovo");
         botao.addEventListener("click", function() {
@@ -223,7 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function TecladoVermelho(letra) {
 
-        
         const tecladoLetra = document.querySelector(`[data-key=${letra}]`);
         if(tecladoLetra) {
             tecladoLetra.classList.add("letra-errada");
@@ -241,16 +222,13 @@ document.addEventListener("DOMContentLoaded", () => {
         
     }
 
-    function initStatsModal() {
-        const modal = document.getElementById("stats-modal");
+    function iniciarPalavrasModal() {
+        const modal = document.getElementById("palavras-modal");
 
-        //Get the button that opens the modal
         const btn = document.getElementById("stats");
 
-        //Get the <span element that closes the modal
-        const span = document.getElementById("close-stats");
+        const span = document.getElementById("close-palavras");
 
-        //When the user clicks on the button, open the modal
         btn.addEventListener("click", function () {
             
             modal.style.display = "block";
@@ -277,7 +255,6 @@ document.addEventListener("DOMContentLoaded", () => {
             inputNovaPalavra.value = "";
             MostrarAlerta(inputValor.length);
             
-
         });
 
         //Botão para remover as palavras adicionadas
@@ -285,45 +262,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
         btnRemover.addEventListener("click", function () {
             
-            if(vetor.length === 5) {
+            if(vetor.length === 10) {
                 alert("Ainda não foram adicionadas novas palavras!");
             }
 
-            if(vetor.length > 5) {
+            if(vetor.length > 10) {
                 
                 var resultado = confirm("Confirma a remoção?");
                 if(resultado === true) {
                     window.localStorage.removeItem("storedArray");
-                    vetor = ["panda", "cachorro", "leopardo", "coala", "baleia"];
+                    vetor = ["panda", "cachorro", "leopardo", "coala", "baleia", "corvo", "gato", "tigre", "coelho", "ovelha"];
                     alert("As palavras foram removidas!")
                 }   
             }
         });
 
-
-
-        //When the user clicks on <span> (x), close the modal
+        //Quando o usuário clica no <span> (x), fecha o modal
         span.addEventListener("click", function () {
             modal.style.display = "none";
         });
 
-        //When the user clicks anywhere outside of the modal, close it
+        //Quando o usuário clica fora do modal, ele fecha
         window.addEventListener("click", function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         });
 
-        // const btnReset = document.getElementById("btn-reset");
-
-        // btnReset.addEventListener("click", function () {
-            
-        //     window.localStorage.setItem("currentStreak", 0);
-        //     window.localStorage.setItem("totalWins", 0);
-        //     window.localStorage.setItem("totalGames", 0);
-            
-        //     modal.style.display = "none";
-        // });
     }
 
     function MostrarAlerta(tamPalavra) {
@@ -335,26 +300,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function initHelpModal() {
+    function iniciarHelpModal() {
         const modal = document.getElementById("help-modal");
 
-        //Get the button that opens the modal
         const btn = document.getElementById("help");
 
-        //Get the <span> element that closes the modal
         const span = document.getElementById("close-help");
 
-        //When the user clicks on the button, open the modal
         btn.addEventListener("click", function () {
             modal.style.display = "block";
         });
 
-        //When the user clicks on <span> (x), close the modal
         span.addEventListener("click", function () {
             modal.style.display = "none";
         });
 
-        //When the user clicks anywhere outside of the modal, close it
         window.addEventListener("click", function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
@@ -362,8 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-    function addKeyboardClicks() {
+    function adicionarKeyboardClicks() {
         const keys = document.querySelectorAll(".keyboard-row button");
         for (let i = 0; i < keys.length; i++) {
             keys[i].addEventListener("click", ({ target }) => {
@@ -383,21 +342,17 @@ document.addEventListener("DOMContentLoaded", () => {
                                     
                                     countCerto = countCerto + 1;
 
-                                    
                                     PalavraCorreta(key);
                                     
-
                                     //* Impede o usuário digitar a mesma letra novamente
                                     const chave = document.querySelector(`[data-key=${key}]`);
                                     if(chave) {
                                         chave.removeAttribute("data-key");
                                     }
                                             
-    
                                 } else {
                                     wrong++;
                                 }
-                                
                             }
 
                             if(wrong === palavraAtual.length) {
@@ -411,87 +366,13 @@ document.addEventListener("DOMContentLoaded", () => {
                                     const chave = document.querySelector(`[data-key=${key}]`);
                                     if(chave) {
                                         chave.removeAttribute("data-key");
-                                    }
-                                    
-                                }
-                            
+                                    }   
+                                }     
                             }
                         }
                     }
-                }      
-                
-
-                
-
-                
+                }                 
             });
         }
     }
-
-
-    //* Verifica a entrado do teclado
-    document.addEventListener("keyup", (e) => {
-        if("KeyA" <= e.code && e.code <= "KeyZ") {
-            const keyPressed = e.code[3].toLowerCase();
-            
-
-            if(countErrado <= 5) {
-                if(countCerto <= palavraAtual.length - 1) {
-
-                    var wrong = 0;
-
-                    for(let i=0; i<palavraAtual.length; i++) {
-                        
-                        if(keyPressed === palavraAtual[i]) {
-                            quadrado = document.getElementById(i+1);
-                            quadrado.textContent = keyPressed;
-                            
-                            countCerto = countCerto + 1;
-
-                            
-                            PalavraCorreta(keyPressed);
-                            
-
-                            //* Impede o usuário digitar a mesma letra novamente
-                            const chave = document.querySelector(`[data-key=${keyPressed}]`);
-                            if(chave) {
-                                chave.removeAttribute("data-key");
-                            }
-
-                        } else {
-                            wrong++;
-                        }
-                        
-                    }
-
-                    if(wrong === palavraAtual.length) {
-                        
-                        LetraErrada(keyPressed);
-
-                        //* Impede o usuário digitar a mesma letra novamente
-                        const chave = document.querySelector(`[data-key=${keyPressed}]`);
-                        if(chave) {
-                            chave.removeAttribute("data-key");
-                        }
-                        
-                        
-                        
-                    
-                    }
-                }
-            }
-
-
-        } else if(e.code == "Backspace") {  
-            return;
-        } else if(e.code == "Enter") {
-            if(countErrado === 6 || countCerto === palavraAtual.length) {
-                location.reload();
-            }
-              
-        }
-    });
-
-
-
 });
